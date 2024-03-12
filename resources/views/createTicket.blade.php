@@ -19,6 +19,29 @@
         }
     </style>
 </head>
+@if(Session::has('success'))
+<script>
+
+toastr.options = {
+  "closeButton": false,
+  "debug": false,
+  "newestOnTop": false,
+  "progressBar": true,
+  "positionClass": "toast-top-right",
+  "preventDuplicates": false,
+  "onclick": null,
+  "showDuration": "300",
+  "hideDuration": "1000",
+  "timeOut": "5000",
+  "extendedTimeOut": "1000",
+  "showEasing": "swing",
+  "hideEasing": "linear",
+  "showMethod": "fadeIn",
+  "hideMethod": "fadeOut"
+}
+    toastr.success("{{Session::get('success')}}")
+</script>
+@endif
 <body class="font-normal">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script> 

@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use Hachther\MeSomb\Operation\Payment\Collect;
 use Illuminate\Http\Request;
 use App\Models\Ticket;
 use Dompdf\Dompdf;
@@ -27,6 +27,13 @@ class ticketsController extends Controller
             "email"=>"email|nullable",
             "date"=>"date|required"
         ]);
+       
+        $payment = new Collect("237400001019",100, $request->payment, 'CM');
+
+        $payment = $payment->pay();
+
+        if($payment->success){
+         
         $ticket->name_customer =  $request->name;
         $ticket->phone = $request->phone;
         $ticket->email = $request->email;
@@ -154,7 +161,10 @@ $dompdf->render();
 
 // Output the generated PDF to Browser
 $dompdf->stream();
-        return redirect("/")->withSuccess("Billet reserve avec success")->download($dompdf);;
-    
-    }
+        return back()->withSuccess("Billet reserve avec success")->download($dompdf,['location'=>'/']);
+        
+     } else {
+            // fire some event, redirect to error page
+        }
+    } 
 }
